@@ -7,22 +7,43 @@ through to conversion.
 ## Stack
 
 - **Next.js 16** (App Router, Turbopack, Server Actions)
-- **Prisma 7** + SQLite (via `@prisma/adapter-better-sqlite3`) — swap the
-  adapter/datasource for Postgres or another engine in production if needed
+- **Prisma 7** + Postgres (via `@prisma/adapter-pg`) — works with any hosted
+  Postgres (Neon, Supabase, Vercel Postgres, Railway, etc.)
 - **Tailwind CSS v4**
 - Session auth via signed JWT in an httpOnly cookie (no third-party auth
   provider)
 
 ## Getting started
 
+1. Create a free Postgres database (e.g. at [neon.com](https://neon.com) or
+   [supabase.com](https://supabase.com)) and copy its connection string.
+2. Set `DATABASE_URL` in `.env` to that connection string.
+3. Run:
+
 ```bash
 npm install
-npm run db:push    # create/sync the SQLite schema
+npm run db:push    # create/sync the schema
 npm run db:seed     # create the admin account from .env
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+### Deploying to Vercel
+
+Set these environment variables in the Vercel project settings (Settings →
+Environment Variables), then deploy:
+
+- `DATABASE_URL` — your Postgres connection string
+- `SESSION_SECRET` — a long random string (same one works for all envs, or
+  generate a fresh one per environment)
+- `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` — used only when you run the
+  seed script
+
+After the first deploy, run `npm run db:push && npm run db:seed` once
+against the production `DATABASE_URL` (locally, with `.env` pointed at the
+production database, or via `vercel env pull`) to create the schema and the
+admin account.
 
 ## Accounts
 
@@ -49,7 +70,7 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Useful scripts
 
 ```bash
-npm run db:push     # sync prisma/schema.prisma to the SQLite db
+npm run db:push     # sync prisma/schema.prisma to the database
 npm run db:seed      # (re)create the admin account from .env
 npm run db:studio    # browse the database in Prisma Studio
 npm run build        # production build
@@ -60,6 +81,7 @@ npm run lint          # eslint
 
 - `prisma.config.ts` holds the datasource URL (Prisma 7 no longer reads it
   from `schema.prisma` directly); `.env`'s `DATABASE_URL` feeds it.
-- The SQLite file lives at `prisma/dev.db` and is gitignored.
+- `postinstall` runs `prisma generate` automatically after `npm install` —
+  required for both local dev and Vercel builds.
 - Branding (logo, name, colors) is pulled from
   [krateus-dynamics.web.app](https://krateus-dynamics.web.app).
