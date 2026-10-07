@@ -34,13 +34,13 @@ export function LeadsFilterBar({
 
   return (
     <div className="mb-5 flex flex-wrap items-center gap-3">
-      <div className="relative">
+      <div className="relative w-full sm:w-64">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
         <input
           defaultValue={searchParams.get("q") ?? ""}
           onChange={(e) => updateParam("q", e.target.value)}
           placeholder="Search business name…"
-          className="h-10 w-64 rounded-lg border border-border-subtle bg-surface pl-9 pr-3 text-sm outline-none focus:border-brand-emerald-400 focus:ring-1 focus:ring-brand-emerald-400"
+          className="h-10 w-full rounded-lg border border-border-subtle bg-surface pl-9 pr-3 text-sm outline-none focus:border-brand-emerald-400 focus:ring-1 focus:ring-brand-emerald-400"
         />
       </div>
 

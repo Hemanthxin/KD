@@ -93,11 +93,11 @@ export default async function WorkerLeadDetailPage({
             )}
             {lead.activities.map((activity) => (
               <div key={activity.id} className="px-5 py-4">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-foreground">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="min-w-0 truncate text-sm font-medium text-foreground">
                     {activity.actor?.name ?? "System"}
                   </p>
-                  <span className="text-xs text-text-muted">
+                  <span className="shrink-0 text-xs text-text-muted">
                     {formatDateTime(activity.createdAt)}
                   </span>
                 </div>

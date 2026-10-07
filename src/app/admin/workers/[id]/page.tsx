@@ -94,11 +94,11 @@ export default async function WorkerDetailPage({
               href={`/admin/leads/${lead.id}`}
               className="flex items-center justify-between gap-3 px-5 py-3.5 hover:bg-surface-muted"
             >
-              <div>
-                <p className="text-sm font-medium text-foreground">
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium text-foreground">
                   {lead.businessName}
                 </p>
-                <p className="text-xs text-text-muted">
+                <p className="truncate text-xs text-text-muted">
                   Updated {formatDate(lead.updatedAt)}
                 </p>
               </div>

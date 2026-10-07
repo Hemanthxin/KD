@@ -34,8 +34,8 @@ export default async function MyLeadsPage({
 
       <StatusFilterTabs />
 
-      <div className="overflow-hidden rounded-xl border border-border-subtle bg-surface">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-xl border border-border-subtle bg-surface">
+        <table className="w-full min-w-[560px] text-sm">
           <thead className="bg-surface-muted text-left text-xs font-semibold uppercase tracking-wide text-text-muted">
             <tr>
               <th className="px-5 py-3">Business</th>

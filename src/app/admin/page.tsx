@@ -169,15 +169,15 @@ export default async function AdminDashboardPage() {
                 key={worker.id}
                 className="flex items-center justify-between px-5 py-3.5"
               >
-                <div className="flex items-center gap-3">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-teal-900 text-xs font-bold text-white">
+                <div className="flex min-w-0 items-center gap-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-teal-900 text-xs font-bold text-white">
                     {i + 1}
                   </span>
-                  <span className="text-sm font-medium text-foreground">
+                  <span className="truncate text-sm font-medium text-foreground">
                     {worker.name}
                   </span>
                 </div>
-                <div className="flex items-center gap-4 text-xs text-text-muted">
+                <div className="flex shrink-0 items-center gap-4 text-xs text-text-muted">
                   <span className="flex items-center gap-1">
                     <Loader className="h-3.5 w-3.5" />
                     {worker.active} active

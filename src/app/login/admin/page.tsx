@@ -9,12 +9,12 @@ export const metadata = { title: "Admin Login | Krateus Dynamic Solutions" };
 export default function AdminLoginPage() {
   return (
     <div className="flex min-h-screen flex-col bg-brand-gradient">
-      <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-6 py-16">
+      <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-16 sm:px-6">
         <div className="mb-8 flex justify-center">
           <Logo href="/" dark size={48} />
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-8 shadow-2xl backdrop-blur">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur sm:p-8">
           <div className="mb-6 flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-emerald-500/15 text-brand-emerald-400">
               <ShieldCheck className="h-5 w-5" />

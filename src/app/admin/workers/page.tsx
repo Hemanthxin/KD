@@ -55,7 +55,7 @@ export default async function WorkersPage() {
               return (
                 <div
                   key={worker.id}
-                  className="flex items-center justify-between gap-3 px-5 py-4"
+                  className="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <Link
                     href={`/admin/workers/${worker.id}`}
@@ -79,7 +79,7 @@ export default async function WorkersPage() {
                     </div>
                   </Link>
 
-                  <div className="flex shrink-0 items-center gap-5">
+                  <div className="flex items-center justify-between gap-5 pl-12 sm:justify-end sm:pl-0">
                     <div className="text-right text-xs text-text-muted">
                       <p>
                         <span className="font-semibold text-foreground">

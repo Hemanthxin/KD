@@ -13,25 +13,25 @@ export default function HomePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="border-b border-white/10 bg-brand-gradient">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <Logo href="/" dark size={42} />
-          <nav className="flex items-center gap-3 text-sm">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-5 sm:px-6">
+          <Logo href="/" dark size={38} />
+          <nav className="flex items-center gap-2 text-sm sm:gap-3">
             <Link
               href="/login/worker"
-              className="rounded-lg px-4 py-2 font-medium text-white/80 hover:text-white"
+              className="rounded-lg px-3 py-2 font-medium text-white/80 hover:text-white sm:px-4"
             >
               Worker Login
             </Link>
             <Link
               href="/login/admin"
-              className="rounded-lg bg-brand-emerald-500 px-4 py-2 font-medium text-white hover:bg-brand-emerald-600"
+              className="rounded-lg bg-brand-emerald-500 px-3 py-2 font-medium text-white hover:bg-brand-emerald-600 sm:px-4"
             >
               Admin Login
             </Link>
           </nav>
         </div>
 
-        <div className="mx-auto max-w-6xl px-6 pb-24 pt-14 sm:pt-20">
+        <div className="mx-auto max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pb-24 sm:pt-20">
           <div className="max-w-2xl">
             <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-emerald-300 ring-1 ring-inset ring-white/10">
               Internal Workspace
@@ -67,7 +67,7 @@ export default function HomePage() {
       </header>
 
       <main className="flex-1 bg-background">
-        <section className="mx-auto max-w-6xl px-6 py-20">
+        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
               How the workspace works
@@ -101,7 +101,7 @@ export default function HomePage() {
         </section>
 
         <section className="border-t border-border-subtle bg-surface-muted">
-          <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:grid-cols-2">
+          <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:grid-cols-2 sm:px-6">
             <PortalCard
               icon={ShieldCheck}
               title="Admin Portal"
@@ -121,7 +121,7 @@ export default function HomePage() {
       </main>
 
       <footer className="border-t border-border-subtle bg-background">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-text-muted sm:flex-row">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-text-muted sm:flex-row sm:px-6">
           <Logo href={null} showText size={28} />
           <p>
             © {new Date().getFullYear()} Krateus Dynamic Solutions. All

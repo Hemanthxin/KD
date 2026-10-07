@@ -5,6 +5,7 @@ import { logout } from "@/app/actions/auth-actions";
 import { initials } from "@/lib/utils";
 import type { LucideIcon } from "lucide-react";
 import { NavLink } from "@/components/nav-link";
+import { MobileSidebar } from "@/components/mobile-sidebar";
 
 export type NavItem = {
   href: string;
@@ -26,8 +27,8 @@ export function DashboardShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-surface-muted">
-      <aside className="fixed inset-y-0 left-0 flex w-64 flex-col bg-brand-gradient">
+    <div className="min-h-screen bg-surface-muted lg:flex">
+      <MobileSidebar>
         <div className="px-5 py-6">
           <Logo href={null} dark size={36} />
         </div>
@@ -68,9 +69,9 @@ export function DashboardShell({
             </button>
           </form>
         </div>
-      </aside>
+      </MobileSidebar>
 
-      <main className="ml-64 flex-1 px-8 py-8">
+      <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
         <div className="mx-auto max-w-6xl">{children}</div>
       </main>
     </div>
