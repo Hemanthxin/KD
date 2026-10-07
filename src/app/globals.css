@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6f8f7;
+  --foreground: #0b2f2c;
+
+  --brand-teal-950: #06201d;
+  --brand-teal-900: #0a2b27;
+  --brand-teal-800: #103c36;
+  --brand-teal-700: #164e46;
+  --brand-teal-600: #1d6358;
+  --brand-emerald-600: #059669;
+  --brand-emerald-500: #10b981;
+  --brand-emerald-400: #34d399;
+  --brand-emerald-100: #d1fae5;
+
+  --surface: #ffffff;
+  --surface-muted: #f0f4f2;
+  --border-subtle: #e2e8e5;
+  --text-muted: #5b6b67;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border-subtle: var(--border-subtle);
+  --color-text-muted: var(--text-muted);
+
+  --color-brand-teal-950: var(--brand-teal-950);
+  --color-brand-teal-900: var(--brand-teal-900);
+  --color-brand-teal-800: var(--brand-teal-800);
+  --color-brand-teal-700: var(--brand-teal-700);
+  --color-brand-teal-600: var(--brand-teal-600);
+  --color-brand-emerald-600: var(--brand-emerald-600);
+  --color-brand-emerald-500: var(--brand-emerald-500);
+  --color-brand-emerald-400: var(--brand-emerald-400);
+  --color-brand-emerald-100: var(--brand-emerald-100);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+.bg-brand-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--brand-teal-950) 0%,
+    var(--brand-teal-800) 55%,
+    var(--brand-teal-600) 100%
+  );
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(
+    90deg,
+    var(--brand-emerald-400) 0%,
+    var(--brand-emerald-500) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+::selection {
+  background: var(--brand-emerald-400);
+  color: var(--brand-teal-950);
+}

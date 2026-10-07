@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum Role {
+  ADMIN
+  WORKER
+}
+
+enum LeadStatus {
+  NEW
+  IN_PROGRESS
+  COMPLETED
+  NOT_INTERESTED
+}
+
+enum ActivityAction {
+  UPLOADED
+  ACCEPTED
+  STATUS_CHANGED
+  NOTE_ADDED
+  UNASSIGNED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  leadsAssigned Lead[]         @relation("AssignedWorker")
+  leadsUploaded Lead[]         @relation("UploadedBy")
+  activities    LeadActivity[]
+}
+
+model Lead {
+  id           String     @id @default(cuid())
+  businessName String
+  contactName  String?
+  phone        String?
+  email        String?
+  category     String?
+  city         String?
+  notes        String?
+  status       LeadStatus @default(NEW)
+
+  assignedTo   User?   @relation("AssignedWorker", fields: [assignedToId], references: [id])
+  assignedToId String?
+
+  uploadedBy   User?   @relation("UploadedBy", fields: [uploadedById], references: [id])
+  uploadedById String?
+
+  acceptedAt  DateTime?
+  completedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  activities LeadActivity[]
+
+  @@index([status])
+  @@index([assignedToId])
+}
+
+model LeadActivity {
+  id         String         @id @default(cuid())
+  lead       Lead           @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId     String
+  actor      User?          @relation(fields: [actorId], references: [id])
+  actorId    String?
+  action     ActivityAction
+  note       String?
+  fromStatus LeadStatus?
+  toStatus   LeadStatus?
+  createdAt  DateTime       @default(now())
+
+  @@index([leadId])
+}
