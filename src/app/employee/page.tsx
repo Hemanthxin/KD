@@ -7,6 +7,7 @@ import { StatCard } from "@/components/ui/stat-card";
 import { Card, CardHeader } from "@/components/ui/card";
 import { StatusBadge } from "@/components/status-badge";
 import { AcceptLeadButton } from "@/components/employee/accept-lead-button";
+import { AutoRefresh } from "@/components/auto-refresh";
 import { formatDate } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -31,6 +32,7 @@ export default async function EmployeeDashboardPage() {
 
   return (
     <>
+      <AutoRefresh />
       <TopHeader
         title={`Welcome back, ${session.name.split(" ")[0]}`}
         description="Here's where things stand today."

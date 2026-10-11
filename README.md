@@ -10,6 +10,8 @@ tracked through to conversion.
 - **Prisma 7** + Postgres (via `@prisma/adapter-pg`) — works with any hosted
   Postgres (Neon, Supabase, Vercel Postgres, Railway, etc.)
 - **Tailwind CSS v4**
+- **Vercel Blob** for call recording uploads (direct browser-to-storage,
+  bypasses the serverless function body-size limit)
 - Session auth via signed JWT in an httpOnly cookie (no third-party auth
   provider)
 
@@ -39,6 +41,10 @@ Environment Variables), then deploy:
   generate a fresh one per environment)
 - `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` — used only when you run the
   seed script
+- `BLOB_READ_WRITE_TOKEN` — for call recording uploads. Create a Blob store
+  from the project's **Storage** tab → **Create Database** → **Blob**; Vercel
+  adds this env var automatically. Run `vercel env pull` to get it locally
+  too if you want to test uploads from `npm run dev`.
 
 After the first deploy, run `npm run db:push && npm run db:seed` once
 against the production `DATABASE_URL` (locally, with `.env` pointed at the
@@ -60,9 +66,12 @@ admin account.
    `.xls` file with business leads (name + phone/email at minimum). Column
    order and naming are flexible; headers are matched case-insensitively.
 2. **Employees accept leads** from `/employee/available` — first to accept
-   owns it and it moves to their "My Leads" list.
-3. **Employees update progress** on `/employee/leads/[id]` — add notes and
-   move the lead to *Completed* (converted to a client) or *Not Interested*.
+   owns it and it disappears from everyone else's list within a few seconds
+   (the page polls while visible, and the accept itself is an atomic DB
+   update so two people can't claim the same lead).
+3. **Employees update progress** on `/employee/leads/[id]` — add notes, move
+   the lead to *Completed* (converted to a client) or *Not Interested*, and
+   upload call recordings (any audio format, up to 150MB).
 4. **Admin sees everything** on `/admin/leads` and `/admin/employees` — which
    employee has which lead, current status, and the full activity timeline
    per lead (`/admin/leads/[id]`).

@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { TopHeader } from "@/components/dashboard-shell";
 import { SearchBox } from "@/components/search-box";
 import { AcceptLeadButton } from "@/components/employee/accept-lead-button";
+import { AutoRefresh } from "@/components/auto-refresh";
 import { Phone, Mail, MapPin, Tag } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 
@@ -25,6 +26,7 @@ export default async function AvailableLeadsPage({
 
   return (
     <>
+      <AutoRefresh />
       <TopHeader
         title="Available Leads"
         description="Unclaimed businesses waiting for outreach. First to accept, works it."

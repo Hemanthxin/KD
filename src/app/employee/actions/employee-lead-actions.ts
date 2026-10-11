@@ -8,23 +8,16 @@ import { db } from "@/lib/db";
 export async function acceptLead(leadId: string) {
   const session = await requireEmployee();
 
-  const lead = await db.lead.findUnique({ where: { id: leadId } });
-  if (!lead || lead.status !== "NEW" || lead.assignedToId) return;
-
-  await db.lead.update({
-    where: { id: leadId },
+  // Conditional update: only succeeds if the lead is still NEW and
+  // unassigned, so two employees racing to accept the same lead can't
+  // both win it. Whoever's update lands first flips the row and the
+  // second attempt's where-clause no longer matches (count: 0).
+  const result = await db.lead.updateMany({
+    where: { id: leadId, status: "NEW", assignedToId: null },
     data: {
       status: "IN_PROGRESS",
       assignedToId: session.uid,
       acceptedAt: new Date(),
-      activities: {
-        create: {
-          action: "ACCEPTED",
-          actorId: session.uid,
-          fromStatus: "NEW",
-          toStatus: "IN_PROGRESS",
-        },
-      },
     },
   });
 
@@ -34,6 +27,18 @@ export async function acceptLead(leadId: string) {
   revalidatePath("/admin");
   revalidatePath("/admin/leads");
   revalidatePath(`/admin/leads/${leadId}`);
+
+  if (result.count === 0) return;
+
+  await db.leadActivity.create({
+    data: {
+      leadId,
+      actorId: session.uid,
+      action: "ACCEPTED",
+      fromStatus: "NEW",
+      toStatus: "IN_PROGRESS",
+    },
+  });
 }
 
 const progressSchema = z.object({
@@ -95,6 +100,50 @@ export async function updateProgress(
   revalidatePath(`/employee/leads/${leadId}`);
   revalidatePath("/admin");
   revalidatePath("/admin/leads");
+  revalidatePath(`/admin/leads/${leadId}`);
+
+  return { success: true };
+}
+
+const recordingSchema = z.object({
+  leadId: z.string().min(1),
+  url: z.string().url(),
+  fileName: z.string().trim().min(1).max(255),
+});
+
+export type AddRecordingState =
+  | { error: string }
+  | { success: true }
+  | undefined;
+
+export async function addCallRecording(
+  input: z.infer<typeof recordingSchema>
+): Promise<AddRecordingState> {
+  const session = await requireEmployee();
+
+  const parsed = recordingSchema.safeParse(input);
+  if (!parsed.success) {
+    return { error: "Invalid upload" };
+  }
+
+  const { leadId, url, fileName } = parsed.data;
+
+  const lead = await db.lead.findUnique({ where: { id: leadId } });
+  if (!lead || lead.assignedToId !== session.uid) {
+    return { error: "You don't have this lead assigned" };
+  }
+
+  await db.leadActivity.create({
+    data: {
+      leadId,
+      actorId: session.uid,
+      action: "RECORDING_ADDED",
+      attachmentUrl: url,
+      attachmentName: fileName,
+    },
+  });
+
+  revalidatePath(`/employee/leads/${leadId}`);
   revalidatePath(`/admin/leads/${leadId}`);
 
   return { success: true };

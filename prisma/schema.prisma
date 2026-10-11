@@ -24,6 +24,7 @@ enum ActivityAction {
   STATUS_CHANGED
   NOTE_ADDED
   UNASSIGNED
+  RECORDING_ADDED
 }
 
 model User {
@@ -79,6 +80,8 @@ model LeadActivity {
   note       String?
   fromStatus LeadStatus?
   toStatus   LeadStatus?
+  attachmentUrl  String?
+  attachmentName String?
   createdAt  DateTime       @default(now())
 
   @@index([leadId])

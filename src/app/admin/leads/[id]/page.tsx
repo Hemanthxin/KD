@@ -160,6 +160,15 @@ export default async function AdminLeadDetailPage({
                 <p className="mt-1 text-sm text-text-muted">
                   {describeActivity(activity)}
                 </p>
+                {activity.action === "RECORDING_ADDED" &&
+                  activity.attachmentUrl && (
+                    <audio
+                      controls
+                      preload="none"
+                      src={activity.attachmentUrl}
+                      className="mt-2 h-10 w-full"
+                    />
+                  )}
               </div>
             ))}
           </div>
@@ -196,6 +205,7 @@ function describeActivity(activity: {
   note: string | null;
   fromStatus: string | null;
   toStatus: string | null;
+  attachmentName: string | null;
 }) {
   switch (activity.action) {
     case "UPLOADED":
@@ -212,6 +222,10 @@ function describeActivity(activity: {
       return activity.note ?? "Added a note";
     case "UNASSIGNED":
       return activity.note ?? "Released back to the pool";
+    case "RECORDING_ADDED":
+      return `Uploaded a call recording${
+        activity.attachmentName ? ` — ${activity.attachmentName}` : ""
+      }`;
     default:
       return activity.note ?? activity.action;
   }

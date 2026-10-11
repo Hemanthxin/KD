@@ -7,6 +7,7 @@ import { TopHeader } from "@/components/dashboard-shell";
 import { Card, CardHeader } from "@/components/ui/card";
 import { StatusBadge } from "@/components/status-badge";
 import { ProgressForm } from "@/components/employee/progress-form";
+import { RecordingUpload } from "@/components/employee/recording-upload";
 import { formatDateTime } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -78,6 +79,16 @@ export default async function EmployeeLeadDetailPage({
               <ProgressForm leadId={lead.id} currentStatus={lead.status} />
             </div>
           </Card>
+
+          <Card>
+            <CardHeader
+              title="Call recordings"
+              description="Upload a recording of a call with this business"
+            />
+            <div className="p-5">
+              <RecordingUpload leadId={lead.id} />
+            </div>
+          </Card>
         </div>
 
         <Card className="lg:col-span-2">
@@ -104,6 +115,15 @@ export default async function EmployeeLeadDetailPage({
                 <p className="mt-1 text-sm text-text-muted">
                   {describeActivity(activity)}
                 </p>
+                {activity.action === "RECORDING_ADDED" &&
+                  activity.attachmentUrl && (
+                    <audio
+                      controls
+                      preload="none"
+                      src={activity.attachmentUrl}
+                      className="mt-2 h-10 w-full"
+                    />
+                  )}
               </div>
             ))}
           </div>
@@ -140,6 +160,7 @@ function describeActivity(activity: {
   note: string | null;
   fromStatus: string | null;
   toStatus: string | null;
+  attachmentName: string | null;
 }) {
   switch (activity.action) {
     case "UPLOADED":
@@ -156,6 +177,10 @@ function describeActivity(activity: {
       return activity.note ?? "Added a note";
     case "UNASSIGNED":
       return activity.note ?? "Released back to the pool";
+    case "RECORDING_ADDED":
+      return `Uploaded a call recording${
+        activity.attachmentName ? ` — ${activity.attachmentName}` : ""
+      }`;
     default:
       return activity.note ?? activity.action;
   }
