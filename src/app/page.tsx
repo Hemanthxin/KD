@@ -17,10 +17,10 @@ export default function HomePage() {
           <Logo href="/" dark size={38} />
           <nav className="flex items-center gap-2 text-sm sm:gap-3">
             <Link
-              href="/login/worker"
+              href="/login/employee"
               className="rounded-lg px-3 py-2 font-medium text-white/80 hover:text-white sm:px-4"
             >
-              Worker Login
+              Employee Login
             </Link>
             <Link
               href="/login/admin"
@@ -42,7 +42,7 @@ export default function HomePage() {
             </h1>
             <p className="mt-5 text-base leading-relaxed text-white/60 sm:text-lg">
               Krateus Dynamic Solutions&apos; lead workspace: admins upload
-              business leads, workers claim and contact them, and every
+              business leads, employees claim and contact them, and every
               conversion from first call to completed website is tracked in
               one place.
             </p>
@@ -55,11 +55,11 @@ export default function HomePage() {
                 Admin Login
               </Link>
               <Link
-                href="/login/worker"
+                href="/login/employee"
                 className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10"
               >
                 <Users className="h-4 w-4" />
-                Worker Login
+                Employee Login
               </Link>
             </div>
           </div>
@@ -88,8 +88,8 @@ export default function HomePage() {
             <Step
               icon={PhoneCall}
               step="02"
-              title="Workers accept & contact"
-              description="Workers browse available leads, accept the ones they'll work, and reach out to pitch a website."
+              title="Employees accept & contact"
+              description="Employees browse available leads, accept the ones they'll work, and reach out to pitch a website."
             />
             <Step
               icon={CheckCircle2}
@@ -105,16 +105,16 @@ export default function HomePage() {
             <PortalCard
               icon={ShieldCheck}
               title="Admin Portal"
-              description="Upload leads in bulk, manage workers, and see exactly which worker is working which lead and how far along it is."
+              description="Upload leads in bulk, manage employees, and see exactly which employee is working which lead and how far along it is."
               href="/login/admin"
               cta="Go to Admin Login"
             />
             <PortalCard
               icon={Users}
-              title="Worker Portal"
+              title="Employee Portal"
               description="See available leads, accept the ones you'll pursue, and update status as you move a business toward becoming a client."
-              href="/login/worker"
-              cta="Go to Worker Login"
+              href="/login/employee"
+              cta="Go to Employee Login"
             />
           </div>
         </section>

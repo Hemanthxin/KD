@@ -1,18 +1,18 @@
 import Link from "next/link";
 import { Inbox, Loader, CheckCircle2, ArrowRight } from "lucide-react";
 import { db } from "@/lib/db";
-import { requireWorker } from "@/lib/auth";
+import { requireEmployee } from "@/lib/auth";
 import { TopHeader } from "@/components/dashboard-shell";
 import { StatCard } from "@/components/ui/stat-card";
 import { Card, CardHeader } from "@/components/ui/card";
 import { StatusBadge } from "@/components/status-badge";
-import { AcceptLeadButton } from "@/components/worker/accept-lead-button";
+import { AcceptLeadButton } from "@/components/employee/accept-lead-button";
 import { formatDate } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
-export default async function WorkerDashboardPage() {
-  const session = await requireWorker();
+export default async function EmployeeDashboardPage() {
+  const session = await requireEmployee();
 
   const [available, myLeads] = await Promise.all([
     db.lead.findMany({
@@ -64,7 +64,7 @@ export default async function WorkerDashboardPage() {
             title="New leads to accept"
             action={
               <Link
-                href="/worker/available"
+                href="/employee/available"
                 className="inline-flex items-center gap-1 text-sm font-medium text-brand-emerald-600 hover:text-brand-emerald-700"
               >
                 View all <ArrowRight className="h-3.5 w-3.5" />
@@ -101,7 +101,7 @@ export default async function WorkerDashboardPage() {
             title="My active leads"
             action={
               <Link
-                href="/worker/my-leads"
+                href="/employee/my-leads"
                 className="inline-flex items-center gap-1 text-sm font-medium text-brand-emerald-600 hover:text-brand-emerald-700"
               >
                 View all <ArrowRight className="h-3.5 w-3.5" />
@@ -120,7 +120,7 @@ export default async function WorkerDashboardPage() {
               .map((lead) => (
                 <Link
                   key={lead.id}
-                  href={`/worker/leads/${lead.id}`}
+                  href={`/employee/leads/${lead.id}`}
                   className="flex items-center justify-between gap-3 px-5 py-3.5 hover:bg-surface-muted"
                 >
                   <div className="min-w-0">

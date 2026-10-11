@@ -61,8 +61,8 @@ export async function uploadLeads(
 
   revalidatePath("/admin");
   revalidatePath("/admin/leads");
-  revalidatePath("/worker");
-  revalidatePath("/worker/available");
+  revalidatePath("/employee");
+  revalidatePath("/employee/available");
 
   return {
     success: true,
@@ -99,8 +99,8 @@ export async function unassignLead(leadId: string) {
   revalidatePath("/admin");
   revalidatePath("/admin/leads");
   revalidatePath(`/admin/leads/${leadId}`);
-  revalidatePath("/worker");
-  revalidatePath("/worker/available");
+  revalidatePath("/employee");
+  revalidatePath("/employee/available");
 }
 
 export async function deleteLead(leadId: string) {

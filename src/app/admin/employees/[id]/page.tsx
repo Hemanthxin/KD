@@ -11,48 +11,48 @@ import { Loader, CheckCircle2, XCircle, ListChecks } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-export default async function WorkerDetailPage({
+export default async function EmployeeDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
 
-  const worker = await db.user.findUnique({
+  const employee = await db.user.findUnique({
     where: { id },
     include: {
       leadsAssigned: { orderBy: { updatedAt: "desc" } },
     },
   });
 
-  if (!worker || worker.role !== "WORKER") notFound();
+  if (!employee || employee.role !== "EMPLOYEE") notFound();
 
-  const inProgress = worker.leadsAssigned.filter(
+  const inProgress = employee.leadsAssigned.filter(
     (l) => l.status === "IN_PROGRESS"
   ).length;
-  const completed = worker.leadsAssigned.filter(
+  const completed = employee.leadsAssigned.filter(
     (l) => l.status === "COMPLETED"
   ).length;
-  const notInterested = worker.leadsAssigned.filter(
+  const notInterested = employee.leadsAssigned.filter(
     (l) => l.status === "NOT_INTERESTED"
   ).length;
 
   return (
     <>
       <Link
-        href="/admin/workers"
+        href="/admin/employees"
         className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" />
-        Back to workers
+        Back to employees
       </Link>
 
       <TopHeader
-        title={worker.name}
-        description={worker.email}
+        title={employee.name}
+        description={employee.email}
         action={
           <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-teal-900 text-sm font-bold text-white">
-            {initials(worker.name)}
+            {initials(employee.name)}
           </span>
         }
       />
@@ -60,7 +60,7 @@ export default async function WorkerDetailPage({
       <div className="grid gap-4 sm:grid-cols-3">
         <StatCard
           label="Total Assigned"
-          value={worker.leadsAssigned.length}
+          value={employee.leadsAssigned.length}
           icon={ListChecks}
         />
         <StatCard
@@ -83,12 +83,12 @@ export default async function WorkerDetailPage({
           description={`${notInterested} marked not interested`}
         />
         <div className="divide-y divide-border-subtle">
-          {worker.leadsAssigned.length === 0 && (
+          {employee.leadsAssigned.length === 0 && (
             <p className="px-5 py-10 text-center text-sm text-text-muted">
               Hasn&apos;t accepted any leads yet.
             </p>
           )}
-          {worker.leadsAssigned.map((lead) => (
+          {employee.leadsAssigned.map((lead) => (
             <Link
               key={lead.id}
               href={`/admin/leads/${lead.id}`}
@@ -111,7 +111,7 @@ export default async function WorkerDetailPage({
       {notInterested > 0 && (
         <p className="mt-3 flex items-center gap-1.5 text-xs text-text-muted">
           <XCircle className="h-3.5 w-3.5" />
-          Leads marked not interested still count toward this worker&apos;s
+          Leads marked not interested still count toward this employee&apos;s
           history above.
         </p>
       )}

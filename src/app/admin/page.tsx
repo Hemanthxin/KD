@@ -17,17 +17,17 @@ import { formatDateTime } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
-  const [statusCounts, workerCount, recentActivity, topWorkers] =
+  const [statusCounts, employeeCount, recentActivity, topEmployees] =
     await Promise.all([
       db.lead.groupBy({ by: ["status"], _count: { _all: true } }),
-      db.user.count({ where: { role: "WORKER" } }),
+      db.user.count({ where: { role: "EMPLOYEE" } }),
       db.leadActivity.findMany({
         take: 8,
         orderBy: { createdAt: "desc" },
         include: { lead: true, actor: true },
       }),
       db.user.findMany({
-        where: { role: "WORKER" },
+        where: { role: "EMPLOYEE" },
         include: {
           _count: {
             select: {
@@ -49,13 +49,13 @@ export default async function AdminDashboardPage() {
     (counts.COMPLETED ?? 0) +
     (counts.NOT_INTERESTED ?? 0);
 
-  const rankedWorkers = topWorkers
-    .map((w) => ({
-      id: w.id,
-      name: w.name,
-      completed: w.leadsAssigned.filter((l) => l.status === "COMPLETED")
+  const rankedEmployees = topEmployees
+    .map((e) => ({
+      id: e.id,
+      name: e.name,
+      completed: e.leadsAssigned.filter((l) => l.status === "COMPLETED")
         .length,
-      active: w.leadsAssigned.filter((l) => l.status === "IN_PROGRESS")
+      active: e.leadsAssigned.filter((l) => l.status === "IN_PROGRESS")
         .length,
     }))
     .sort((a, b) => b.completed - a.completed)
@@ -65,7 +65,7 @@ export default async function AdminDashboardPage() {
     <>
       <TopHeader
         title="Dashboard"
-        description="Live overview of leads, workers, and conversions."
+        description="Live overview of leads, employees, and conversions."
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -80,7 +80,7 @@ export default async function AdminDashboardPage() {
           value={counts.NEW ?? 0}
           icon={Inbox}
           tone="amber"
-          hint="Waiting for a worker"
+          hint="Waiting for an employee"
         />
         <StatCard
           label="In Progress"
@@ -147,11 +147,11 @@ export default async function AdminDashboardPage() {
 
         <Card className="lg:col-span-2">
           <CardHeader
-            title="Worker leaderboard"
-            description={`${workerCount} worker${workerCount === 1 ? "" : "s"} total`}
+            title="Employee leaderboard"
+            description={`${employeeCount} employee${employeeCount === 1 ? "" : "s"} total`}
             action={
               <Link
-                href="/admin/workers"
+                href="/admin/employees"
                 className="inline-flex items-center gap-1 text-sm font-medium text-brand-emerald-600 hover:text-brand-emerald-700"
               >
                 Manage <ArrowRight className="h-3.5 w-3.5" />
@@ -159,14 +159,14 @@ export default async function AdminDashboardPage() {
             }
           />
           <div className="divide-y divide-border-subtle">
-            {rankedWorkers.length === 0 && (
+            {rankedEmployees.length === 0 && (
               <p className="px-5 py-8 text-center text-sm text-text-muted">
-                No workers yet.
+                No employees yet.
               </p>
             )}
-            {rankedWorkers.map((worker, i) => (
+            {rankedEmployees.map((employee, i) => (
               <div
-                key={worker.id}
+                key={employee.id}
                 className="flex items-center justify-between px-5 py-3.5"
               >
                 <div className="flex min-w-0 items-center gap-3">
@@ -174,17 +174,17 @@ export default async function AdminDashboardPage() {
                     {i + 1}
                   </span>
                   <span className="truncate text-sm font-medium text-foreground">
-                    {worker.name}
+                    {employee.name}
                   </span>
                 </div>
                 <div className="flex shrink-0 items-center gap-4 text-xs text-text-muted">
                   <span className="flex items-center gap-1">
                     <Loader className="h-3.5 w-3.5" />
-                    {worker.active} active
+                    {employee.active} active
                   </span>
                   <span className="flex items-center gap-1 font-semibold text-brand-emerald-600">
                     <TrendingUp className="h-3.5 w-3.5" />
-                    {worker.completed} won
+                    {employee.completed} won
                   </span>
                 </div>
               </div>
@@ -193,14 +193,14 @@ export default async function AdminDashboardPage() {
         </Card>
       </div>
 
-      {workerCount === 0 && (
+      {employeeCount === 0 && (
         <Card className="mt-6 border-amber-200 bg-amber-50">
           <div className="flex items-center gap-3 px-5 py-4">
             <Users className="h-5 w-5 text-amber-600" />
             <p className="text-sm text-amber-800">
-              You haven&apos;t added any workers yet.{" "}
-              <Link href="/admin/workers" className="font-semibold underline">
-                Add your first worker
+              You haven&apos;t added any employees yet.{" "}
+              <Link href="/admin/employees" className="font-semibold underline">
+                Add your first employee
               </Link>{" "}
               so they can start accepting leads.
             </p>

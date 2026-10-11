@@ -8,7 +8,7 @@ datasource db {
 
 enum Role {
   ADMIN
-  WORKER
+  EMPLOYEE @map("WORKER")
 }
 
 enum LeadStatus {
@@ -35,7 +35,7 @@ model User {
   active       Boolean  @default(true)
   createdAt    DateTime @default(now())
 
-  leadsAssigned Lead[]         @relation("AssignedWorker")
+  leadsAssigned Lead[]         @relation("AssignedEmployee")
   leadsUploaded Lead[]         @relation("UploadedBy")
   activities    LeadActivity[]
 }
@@ -51,7 +51,7 @@ model Lead {
   notes        String?
   status       LeadStatus @default(NEW)
 
-  assignedTo   User?   @relation("AssignedWorker", fields: [assignedToId], references: [id])
+  assignedTo   User?   @relation("AssignedEmployee", fields: [assignedToId], references: [id])
   assignedToId String?
 
   uploadedBy   User?   @relation("UploadedBy", fields: [uploadedById], references: [id])

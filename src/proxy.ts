@@ -13,9 +13,9 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  if (pathname.startsWith("/worker")) {
-    if (!session || session.role !== "WORKER") {
-      return NextResponse.redirect(new URL("/login/worker", request.url));
+  if (pathname.startsWith("/employee")) {
+    if (!session || session.role !== "EMPLOYEE") {
+      return NextResponse.redirect(new URL("/login/employee", request.url));
     }
   }
 
@@ -23,5 +23,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/worker/:path*"],
+  matcher: ["/admin/:path*", "/employee/:path*"],
 };

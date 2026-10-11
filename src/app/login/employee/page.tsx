@@ -2,11 +2,11 @@ import Link from "next/link";
 import { Users } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { LoginForm } from "@/components/login-form";
-import { loginWorker } from "@/app/actions/auth-actions";
+import { loginEmployee } from "@/app/actions/auth-actions";
 
-export const metadata = { title: "Worker Login | Krateus Dynamic Solutions" };
+export const metadata = { title: "Employee Login | Krateus Dynamic Solutions" };
 
-export default function WorkerLoginPage() {
+export default function EmployeeLoginPage() {
   return (
     <div className="flex min-h-screen flex-col bg-brand-gradient">
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-16 sm:px-6">
@@ -21,7 +21,7 @@ export default function WorkerLoginPage() {
             </span>
             <div>
               <h1 className="text-lg font-semibold text-white">
-                Worker Login
+                Employee Login
               </h1>
               <p className="text-xs text-white/50">
                 Sign in to view and work your leads
@@ -29,7 +29,7 @@ export default function WorkerLoginPage() {
             </div>
           </div>
 
-          <LoginForm action={loginWorker} />
+          <LoginForm action={loginEmployee} />
         </div>
 
         <div className="mt-6 text-center text-sm text-white/40">

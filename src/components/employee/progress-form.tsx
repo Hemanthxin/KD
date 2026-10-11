@@ -5,7 +5,7 @@ import { SubmitButton } from "@/components/ui/submit-button";
 import {
   updateProgress,
   type ProgressState,
-} from "@/app/worker/actions/worker-lead-actions";
+} from "@/app/employee/actions/employee-lead-actions";
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import type { LeadStatus } from "@prisma/client";
 

@@ -1,4 +1,4 @@
-import { acceptLead } from "@/app/worker/actions/worker-lead-actions";
+import { acceptLead } from "@/app/employee/actions/employee-lead-actions";
 import { SubmitButton } from "@/components/ui/submit-button";
 import type { ComponentProps } from "react";
 

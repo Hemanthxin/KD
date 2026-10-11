@@ -1,24 +1,24 @@
 import { LayoutDashboard, Inbox, ListChecks } from "lucide-react";
-import { requireWorker } from "@/lib/auth";
+import { requireEmployee } from "@/lib/auth";
 import { DashboardShell, type NavItem } from "@/components/dashboard-shell";
 
 const navItems: NavItem[] = [
-  { href: "/worker", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/worker/available", label: "Available Leads", icon: Inbox },
-  { href: "/worker/my-leads", label: "My Leads", icon: ListChecks },
+  { href: "/employee", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/employee/available", label: "Available Leads", icon: Inbox },
+  { href: "/employee/my-leads", label: "My Leads", icon: ListChecks },
 ];
 
-export default async function WorkerLayout({
+export default async function EmployeeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await requireWorker();
+  const session = await requireEmployee();
 
   return (
     <DashboardShell
       navItems={navItems}
-      roleLabel="Worker"
+      roleLabel="Employee"
       userName={session.name}
       userEmail={session.email}
     >

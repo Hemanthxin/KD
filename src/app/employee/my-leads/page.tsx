@@ -1,11 +1,11 @@
 import Link from "next/link";
 import type { LeadStatus } from "@prisma/client";
 import { db } from "@/lib/db";
-import { requireWorker } from "@/lib/auth";
+import { requireEmployee } from "@/lib/auth";
 import { TopHeader } from "@/components/dashboard-shell";
 import { StatusBadge } from "@/components/status-badge";
 import { formatDate } from "@/lib/utils";
-import { StatusFilterTabs } from "@/components/worker/status-filter-tabs";
+import { StatusFilterTabs } from "@/components/employee/status-filter-tabs";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +14,7 @@ export default async function MyLeadsPage({
 }: {
   searchParams: Promise<{ status?: string }>;
 }) {
-  const session = await requireWorker();
+  const session = await requireEmployee();
   const { status } = await searchParams;
 
   const leads = await db.lead.findMany({
@@ -59,7 +59,7 @@ export default async function MyLeadsPage({
               <tr key={lead.id} className="hover:bg-surface-muted">
                 <td className="px-5 py-3.5">
                   <Link
-                    href={`/worker/leads/${lead.id}`}
+                    href={`/employee/leads/${lead.id}`}
                     className="font-medium text-foreground hover:text-brand-emerald-600"
                   >
                     {lead.businessName}

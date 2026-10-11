@@ -3,16 +3,16 @@
 import { useActionState, useRef } from "react";
 import { SubmitButton } from "@/components/ui/submit-button";
 import {
-  createWorker,
-  type CreateWorkerState,
-} from "@/app/admin/actions/worker-actions";
+  createEmployee,
+  type CreateEmployeeState,
+} from "@/app/admin/actions/employee-actions";
 import { CheckCircle2, AlertTriangle } from "lucide-react";
 
-export function CreateWorkerForm() {
+export function CreateEmployeeForm() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [state, formAction] = useActionState<CreateWorkerState, FormData>(
+  const [state, formAction] = useActionState<CreateEmployeeState, FormData>(
     async (prevState, formData) => {
-      const result = await createWorker(prevState, formData);
+      const result = await createEmployee(prevState, formData);
       if (result && "success" in result) formRef.current?.reset();
       return result;
     },
@@ -67,12 +67,12 @@ export function CreateWorkerForm() {
       {state && "success" in state && (
         <p className="flex items-start gap-2 rounded-lg bg-brand-emerald-100 px-3 py-2.5 text-sm text-brand-emerald-700 ring-1 ring-inset ring-emerald-200">
           <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
-          {state.name} can now sign in from the Worker Login page.
+          {state.name} can now sign in from the Employee Login page.
         </p>
       )}
 
       <SubmitButton className="w-full" pendingText="Creating…">
-        Create worker
+        Create employee
       </SubmitButton>
     </form>
   );

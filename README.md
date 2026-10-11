@@ -1,8 +1,8 @@
 # Krateus Dynamic Solutions — Lead Workspace
 
 Internal workspace for managing website leads: admins upload businesses that
-don't have a website, workers claim and contact them, and progress is tracked
-through to conversion.
+don't have a website, employees claim and contact them, and progress is
+tracked through to conversion.
 
 ## Stack
 
@@ -50,22 +50,22 @@ admin account.
 - **Admin** — credentials come from `.env` (`ADMIN_EMAIL` / `ADMIN_PASSWORD`),
   created by `npm run db:seed`. There is no admin signup page — only the
   login at `/login/admin`.
-- **Workers** — admins create worker accounts from `/admin/workers`. There is
-  no public worker signup; workers sign in at `/login/worker` once an admin
-  has added them.
+- **Employees** — admins create employee accounts from `/admin/employees`.
+  There is no public employee signup; employees sign in at `/login/employee`
+  once an admin has added them.
 
 ## How it works
 
 1. **Admin uploads leads** at `/admin/leads/upload` — a CSV, `.xlsx`, or
    `.xls` file with business leads (name + phone/email at minimum). Column
    order and naming are flexible; headers are matched case-insensitively.
-2. **Workers accept leads** from `/worker/available` — first to accept owns
-   it and it moves to their "My Leads" list.
-3. **Workers update progress** on `/worker/leads/[id]` — add notes and move
-   the lead to *Completed* (converted to a client) or *Not Interested*.
-4. **Admin sees everything** on `/admin/leads` and `/admin/workers` — which
-   worker has which lead, current status, and the full activity timeline per
-   lead (`/admin/leads/[id]`).
+2. **Employees accept leads** from `/employee/available` — first to accept
+   owns it and it moves to their "My Leads" list.
+3. **Employees update progress** on `/employee/leads/[id]` — add notes and
+   move the lead to *Completed* (converted to a client) or *Not Interested*.
+4. **Admin sees everything** on `/admin/leads` and `/admin/employees` — which
+   employee has which lead, current status, and the full activity timeline
+   per lead (`/admin/leads/[id]`).
 
 ## Useful scripts
 

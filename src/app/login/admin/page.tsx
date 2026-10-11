@@ -33,8 +33,8 @@ export default function AdminLoginPage() {
         </div>
 
         <div className="mt-6 text-center text-sm text-white/40">
-          <Link href="/login/worker" className="hover:text-white/70">
-            Worker login →
+          <Link href="/login/employee" className="hover:text-white/70">
+            Employee login →
           </Link>
         </div>
       </div>

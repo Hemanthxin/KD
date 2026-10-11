@@ -7,7 +7,7 @@ export default function UploadLeadsPage() {
     <>
       <TopHeader
         title="Upload Leads"
-        description="Add a batch of business leads from a spreadsheet. They'll appear immediately in every worker's available leads."
+        description="Add a batch of business leads from a spreadsheet. They'll appear immediately in every employee's available leads."
       />
 
       <div className="grid gap-6 lg:grid-cols-3">

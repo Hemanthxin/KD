@@ -2,16 +2,16 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { TopHeader } from "@/components/dashboard-shell";
 import { Card, CardHeader } from "@/components/ui/card";
-import { CreateWorkerForm } from "@/components/admin/create-worker-form";
+import { CreateEmployeeForm } from "@/components/admin/create-employee-form";
 import { Button } from "@/components/ui/button";
-import { toggleWorkerActive } from "@/app/admin/actions/worker-actions";
+import { toggleEmployeeActive } from "@/app/admin/actions/employee-actions";
 import { initials } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
-export default async function WorkersPage() {
-  const workers = await db.user.findMany({
-    where: { role: "WORKER" },
+export default async function EmployeesPage() {
+  const employees = await db.user.findMany({
+    where: { role: "EMPLOYEE" },
     orderBy: { createdAt: "desc" },
     include: {
       leadsAssigned: { select: { status: true } },
@@ -21,60 +21,60 @@ export default async function WorkersPage() {
   return (
     <>
       <TopHeader
-        title="Workers"
-        description={`${workers.length} worker${workers.length === 1 ? "" : "s"} with access to the lead pool`}
+        title="Employees"
+        description={`${employees.length} employee${employees.length === 1 ? "" : "s"} with access to the lead pool`}
       />
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-1">
           <CardHeader
-            title="Add a worker"
-            description="They'll sign in from the Worker Login page"
+            title="Add an employee"
+            description="They'll sign in from the Employee Login page"
           />
           <div className="p-5">
-            <CreateWorkerForm />
+            <CreateEmployeeForm />
           </div>
         </Card>
 
         <Card className="lg:col-span-2">
-          <CardHeader title="All workers" />
+          <CardHeader title="All employees" />
           <div className="divide-y divide-border-subtle">
-            {workers.length === 0 && (
+            {employees.length === 0 && (
               <p className="px-5 py-10 text-center text-sm text-text-muted">
-                No workers yet. Add your first one on the left.
+                No employees yet. Add your first one on the left.
               </p>
             )}
-            {workers.map((worker) => {
-              const active = worker.leadsAssigned.filter(
+            {employees.map((employee) => {
+              const active = employee.leadsAssigned.filter(
                 (l) => l.status === "IN_PROGRESS"
               ).length;
-              const completed = worker.leadsAssigned.filter(
+              const completed = employee.leadsAssigned.filter(
                 (l) => l.status === "COMPLETED"
               ).length;
 
               return (
                 <div
-                  key={worker.id}
+                  key={employee.id}
                   className="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <Link
-                    href={`/admin/workers/${worker.id}`}
+                    href={`/admin/employees/${employee.id}`}
                     className="flex min-w-0 items-center gap-3"
                   >
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-teal-900 text-xs font-bold text-white">
-                      {initials(worker.name)}
+                      {initials(employee.name)}
                     </span>
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium text-foreground">
-                        {worker.name}
-                        {!worker.active && (
+                        {employee.name}
+                        {!employee.active && (
                           <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold uppercase text-slate-500">
                             Disabled
                           </span>
                         )}
                       </p>
                       <p className="truncate text-xs text-text-muted">
-                        {worker.email}
+                        {employee.email}
                       </p>
                     </div>
                   </Link>
@@ -94,13 +94,13 @@ export default async function WorkersPage() {
                         won
                       </p>
                     </div>
-                    <form action={toggleWorkerActive.bind(null, worker.id)}>
+                    <form action={toggleEmployeeActive.bind(null, employee.id)}>
                       <Button
                         type="submit"
                         variant="outline"
                         size="sm"
                       >
-                        {worker.active ? "Disable" : "Enable"}
+                        {employee.active ? "Disable" : "Enable"}
                       </Button>
                     </form>
                   </div>

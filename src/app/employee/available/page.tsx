@@ -2,7 +2,7 @@ import type { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import { TopHeader } from "@/components/dashboard-shell";
 import { SearchBox } from "@/components/search-box";
-import { AcceptLeadButton } from "@/components/worker/accept-lead-button";
+import { AcceptLeadButton } from "@/components/employee/accept-lead-button";
 import { Phone, Mail, MapPin, Tag } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 

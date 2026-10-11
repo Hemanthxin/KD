@@ -11,7 +11,7 @@ function getSecretKey() {
 
 export type SessionPayload = {
   uid: string;
-  role: "ADMIN" | "WORKER";
+  role: "ADMIN" | "EMPLOYEE";
   name: string;
   email: string;
 };
@@ -31,7 +31,7 @@ export async function verifySessionToken(
     const { payload } = await jwtVerify(token, getSecretKey());
     if (
       typeof payload.uid === "string" &&
-      (payload.role === "ADMIN" || payload.role === "WORKER") &&
+      (payload.role === "ADMIN" || payload.role === "EMPLOYEE") &&
       typeof payload.name === "string" &&
       typeof payload.email === "string"
     ) {

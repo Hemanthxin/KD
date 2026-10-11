@@ -16,7 +16,7 @@ export function NavLink({
   const pathname = usePathname();
   const active =
     pathname === href ||
-    (href !== "/admin" && href !== "/worker" && pathname.startsWith(href));
+    (href !== "/admin" && href !== "/employee" && pathname.startsWith(href));
 
   return (
     <Link

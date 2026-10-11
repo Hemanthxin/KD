@@ -6,7 +6,7 @@ const navItems: NavItem[] = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/leads", label: "Leads", icon: ListChecks },
   { href: "/admin/leads/upload", label: "Upload Leads", icon: UploadCloud },
-  { href: "/admin/workers", label: "Workers", icon: Users },
+  { href: "/admin/employees", label: "Employees", icon: Users },
 ];
 
 export default async function AdminLayout({

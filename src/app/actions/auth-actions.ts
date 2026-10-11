@@ -13,7 +13,7 @@ const credentialsSchema = z.object({
 export type LoginState = { error?: string } | undefined;
 
 async function loginAs(
-  role: "ADMIN" | "WORKER",
+  role: "ADMIN" | "EMPLOYEE",
   destination: string,
   formData: FormData
 ): Promise<LoginState> {
@@ -56,11 +56,11 @@ export async function loginAdmin(
   return loginAs("ADMIN", "/admin", formData);
 }
 
-export async function loginWorker(
+export async function loginEmployee(
   _prevState: LoginState,
   formData: FormData
 ): Promise<LoginState> {
-  return loginAs("WORKER", "/worker", formData);
+  return loginAs("EMPLOYEE", "/employee", formData);
 }
 
 export async function logout() {

@@ -2,11 +2,11 @@
 
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { requireWorker } from "@/lib/auth";
+import { requireEmployee } from "@/lib/auth";
 import { db } from "@/lib/db";
 
 export async function acceptLead(leadId: string) {
-  const session = await requireWorker();
+  const session = await requireEmployee();
 
   const lead = await db.lead.findUnique({ where: { id: leadId } });
   if (!lead || lead.status !== "NEW" || lead.assignedToId) return;
@@ -28,9 +28,9 @@ export async function acceptLead(leadId: string) {
     },
   });
 
-  revalidatePath("/worker");
-  revalidatePath("/worker/available");
-  revalidatePath("/worker/my-leads");
+  revalidatePath("/employee");
+  revalidatePath("/employee/available");
+  revalidatePath("/employee/my-leads");
   revalidatePath("/admin");
   revalidatePath("/admin/leads");
   revalidatePath(`/admin/leads/${leadId}`);
@@ -48,7 +48,7 @@ export async function updateProgress(
   _prevState: ProgressState,
   formData: FormData
 ): Promise<ProgressState> {
-  const session = await requireWorker();
+  const session = await requireEmployee();
 
   const parsed = progressSchema.safeParse({
     leadId: formData.get("leadId"),
@@ -90,9 +90,9 @@ export async function updateProgress(
     },
   });
 
-  revalidatePath("/worker");
-  revalidatePath("/worker/my-leads");
-  revalidatePath(`/worker/leads/${leadId}`);
+  revalidatePath("/employee");
+  revalidatePath("/employee/my-leads");
+  revalidatePath(`/employee/leads/${leadId}`);
   revalidatePath("/admin");
   revalidatePath("/admin/leads");
   revalidatePath(`/admin/leads/${leadId}`);

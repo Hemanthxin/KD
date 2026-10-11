@@ -6,24 +6,24 @@ import { requireAdmin } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { hashPassword } from "@/lib/auth";
 
-const workerSchema = z.object({
+const employeeSchema = z.object({
   name: z.string().trim().min(2, "Name is too short"),
   email: z.string().trim().email("Enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-export type CreateWorkerState =
+export type CreateEmployeeState =
   | { error: string }
   | { success: true; name: string }
   | undefined;
 
-export async function createWorker(
-  _prevState: CreateWorkerState,
+export async function createEmployee(
+  _prevState: CreateEmployeeState,
   formData: FormData
-): Promise<CreateWorkerState> {
+): Promise<CreateEmployeeState> {
   await requireAdmin();
 
-  const parsed = workerSchema.safeParse({
+  const parsed = employeeSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
     password: formData.get("password"),
@@ -43,24 +43,24 @@ export async function createWorker(
   const passwordHash = await hashPassword(password);
 
   await db.user.create({
-    data: { name, email, passwordHash, role: "WORKER" },
+    data: { name, email, passwordHash, role: "EMPLOYEE" },
   });
 
-  revalidatePath("/admin/workers");
+  revalidatePath("/admin/employees");
 
   return { success: true, name };
 }
 
-export async function toggleWorkerActive(userId: string) {
+export async function toggleEmployeeActive(userId: string) {
   await requireAdmin();
 
   const user = await db.user.findUnique({ where: { id: userId } });
-  if (!user || user.role !== "WORKER") return;
+  if (!user || user.role !== "EMPLOYEE") return;
 
   await db.user.update({
     where: { id: userId },
     data: { active: !user.active },
   });
 
-  revalidatePath("/admin/workers");
+  revalidatePath("/admin/employees");
 }

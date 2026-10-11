@@ -104,7 +104,7 @@ export default async function AdminLeadDetailPage({
                     <ConfirmSubmitButton
                       variant="outline"
                       size="sm"
-                      confirmMessage="Release this lead back to the pool? The assigned worker will lose it."
+                      confirmMessage="Release this lead back to the pool? The assigned employee will lose it."
                     >
                       <UserX className="h-4 w-4" />
                       Release
@@ -113,7 +113,7 @@ export default async function AdminLeadDetailPage({
                 </div>
               ) : (
                 <p className="text-sm text-text-muted">
-                  Not yet claimed by a worker.
+                  Not yet claimed by an employee.
                 </p>
               )}
             </div>

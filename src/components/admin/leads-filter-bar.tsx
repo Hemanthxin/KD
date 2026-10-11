@@ -13,9 +13,9 @@ const STATUS_OPTIONS = [
 ];
 
 export function LeadsFilterBar({
-  workers,
+  employees,
 }: {
-  workers: { id: string; name: string }[];
+  employees: { id: string; name: string }[];
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -57,15 +57,15 @@ export function LeadsFilterBar({
       </select>
 
       <select
-        defaultValue={searchParams.get("worker") ?? ""}
-        onChange={(e) => updateParam("worker", e.target.value)}
+        defaultValue={searchParams.get("employee") ?? ""}
+        onChange={(e) => updateParam("employee", e.target.value)}
         className="h-10 rounded-lg border border-border-subtle bg-surface px-3 text-sm outline-none focus:border-brand-emerald-400 focus:ring-1 focus:ring-brand-emerald-400"
       >
-        <option value="">All workers</option>
+        <option value="">All employees</option>
         <option value="unassigned">Unassigned</option>
-        {workers.map((w) => (
-          <option key={w.id} value={w.id}>
-            {w.name}
+        {employees.map((emp) => (
+          <option key={emp.id} value={emp.id}>
+            {emp.name}
           </option>
         ))}
       </select>

@@ -17,7 +17,7 @@ export default async function AdminLeadsPage({
 }: {
   searchParams: Promise<{
     status?: string;
-    worker?: string;
+    employee?: string;
     q?: string;
     page?: string;
   }>;
@@ -27,11 +27,11 @@ export default async function AdminLeadsPage({
 
   const where: Prisma.LeadWhereInput = {};
   if (params.status) where.status = params.status as LeadStatus;
-  if (params.worker === "unassigned") where.assignedToId = null;
-  else if (params.worker) where.assignedToId = params.worker;
+  if (params.employee === "unassigned") where.assignedToId = null;
+  else if (params.employee) where.assignedToId = params.employee;
   if (params.q) where.businessName = { contains: params.q };
 
-  const [leads, total, workers] = await Promise.all([
+  const [leads, total, employees] = await Promise.all([
     db.lead.findMany({
       where,
       include: { assignedTo: true },
@@ -41,7 +41,7 @@ export default async function AdminLeadsPage({
     }),
     db.lead.count({ where }),
     db.user.findMany({
-      where: { role: "WORKER" },
+      where: { role: "EMPLOYEE" },
       select: { id: true, name: true },
       orderBy: { name: "asc" },
     }),
@@ -62,7 +62,7 @@ export default async function AdminLeadsPage({
         }
       />
 
-      <LeadsFilterBar workers={workers} />
+      <LeadsFilterBar employees={employees} />
 
       <div className="overflow-x-auto rounded-xl border border-border-subtle bg-surface">
         <table className="w-full min-w-[640px] text-sm">

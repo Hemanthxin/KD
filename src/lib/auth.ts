@@ -53,10 +53,10 @@ export async function requireAdmin(): Promise<SessionPayload> {
   return session;
 }
 
-export async function requireWorker(): Promise<SessionPayload> {
+export async function requireEmployee(): Promise<SessionPayload> {
   const session = await getSession();
-  if (!session || session.role !== "WORKER") {
-    redirect("/login/worker");
+  if (!session || session.role !== "EMPLOYEE") {
+    redirect("/login/employee");
   }
   return session;
 }

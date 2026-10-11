@@ -2,21 +2,21 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Phone, Mail, MapPin, Tag, User } from "lucide-react";
 import { db } from "@/lib/db";
-import { requireWorker } from "@/lib/auth";
+import { requireEmployee } from "@/lib/auth";
 import { TopHeader } from "@/components/dashboard-shell";
 import { Card, CardHeader } from "@/components/ui/card";
 import { StatusBadge } from "@/components/status-badge";
-import { ProgressForm } from "@/components/worker/progress-form";
+import { ProgressForm } from "@/components/employee/progress-form";
 import { formatDateTime } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
-export default async function WorkerLeadDetailPage({
+export default async function EmployeeLeadDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const session = await requireWorker();
+  const session = await requireEmployee();
   const { id } = await params;
 
   const lead = await db.lead.findUnique({
@@ -34,7 +34,7 @@ export default async function WorkerLeadDetailPage({
   return (
     <>
       <Link
-        href="/worker/my-leads"
+        href="/employee/my-leads"
         className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" />
